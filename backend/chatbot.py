@@ -32,9 +32,22 @@ def get_summary_by_title(title: str) -> str:
     return "Titlul nu a fost găsit."
 
 # Chatbot pipeline
+def contains_offensive_language(text):
+    # Simple list, can be extended
+    offensive_words = [
+        "badword1", "badword2", "idiot", "stupid", "hate", "urât", "prost", "jignire"
+    ]
+    text_lower = text.lower()
+    return any(word in text_lower for word in offensive_words)
+
 if __name__ == "__main__":
     OPENAI_API_KEY = read_api_key()
+    print("(Type 'safe' for GPT safety prompt, or 'unsafe' to skip)")
+    gpt_safety = input("Enable GPT safety prompt? (safe/unsafe): ").strip().lower() == "safe"
     query = input("Ce temă sau context te interesează? ")
+    if contains_offensive_language(query):
+        print("Vă rugăm să folosiți un limbaj adecvat. Recomandările nu pot fi generate pentru mesaje ofensatoare.")
+        sys.exit(0)
     recommendations = semantic_search(query)
     if not recommendations:
         print("Nu am găsit recomandări pentru această temă.")
@@ -44,6 +57,8 @@ if __name__ == "__main__":
         for rec in recommendations:
             prompt += f"- {rec['title']}: {', '.join(rec['themes'])}\n"
         prompt += f"\nUtilizatorul caută: {query}\nRăspunde conversațional, cu titlul propus."
+        if gpt_safety:
+            prompt += "\nDacă mesajul utilizatorului conține limbaj ofensator sau nepotrivit, răspunde politicos că nu poți oferi recomandări."
 
         # Call GPT (OpenAI Chat API)
         openai_client = OpenAI(api_key=OPENAI_API_KEY)
