@@ -31,6 +31,7 @@ Thumbs.db
 
 # API keys
 *.env
+OPENAI_API_KEY
 
 # ChromaDB data
 chroma/

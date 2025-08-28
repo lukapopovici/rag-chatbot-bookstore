@@ -1,16 +1,30 @@
+
 import json
-from backend.retriever import semantic_search
+import os
+import sys
+from retriever import semantic_search
 from openai import OpenAI
 
-# Placeholder for your OpenAI API key
-OPENAI_API_KEY = "YOUR_OPENAI_API_KEY"
+def get_project_root():
+    return os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+
+def read_api_key():
+    key_path = os.path.join(get_project_root(), "OPENAI_API_KEY")
+    try:
+        with open(key_path, "r", encoding="utf-8") as f:
+            return f.read().strip()
+    except Exception as e:
+        print(f"Error reading OpenAI API key: {e}")
+        sys.exit(1)
+
 
 # Tool: get_summary_by_title
 def get_summary_by_title(title: str) -> str:
     """
     Return the full summary for a given book title from book_summaries.json.
     """
-    with open("book_summaries.json", "r", encoding="utf-8") as f:
+    summaries_path = os.path.join(os.path.dirname(__file__), "book_summaries.json")
+    with open(summaries_path, "r", encoding="utf-8") as f:
         data = json.load(f)
         for book in data["books"]:
             if book["title"].lower() == title.lower():
@@ -19,6 +33,7 @@ def get_summary_by_title(title: str) -> str:
 
 # Chatbot pipeline
 if __name__ == "__main__":
+    OPENAI_API_KEY = read_api_key()
     query = input("Ce temă sau context te interesează? ")
     recommendations = semantic_search(query)
     if not recommendations:

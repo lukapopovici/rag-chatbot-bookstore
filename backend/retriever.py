@@ -1,12 +1,30 @@
+
+
+import os
+import sys
 from chromadb import Client
 from openai import OpenAI
 
+def get_project_root():
+    return os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+
+def read_api_key():
+    key_path = os.path.join(get_project_root(), "OPENAI_API_KEY")
+    try:
+        with open(key_path, "r", encoding="utf-8") as f:
+            return f.read().strip()
+    except Exception as e:
+        print(f"Error reading OpenAI API key: {e}")
+        sys.exit(1)
+
+
 def semantic_search(query, top_k=3):
+    api_key = read_api_key()
     """
     Return top_k book recommendations based on semantic similarity to the query.
     """
     # Generate embedding for query
-    openai_client = OpenAI()
+    openai_client = OpenAI(api_key=api_key)
     embedding = openai_client.embeddings.create(
         input=[query],
         model="text-embedding-3-small"
