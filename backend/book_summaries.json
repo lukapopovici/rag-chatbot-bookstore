@@ -1,0 +1,59 @@
+{
+  "books": [
+    {
+      "title": "1984",
+      "summary": "Roman distopic despre o societate supravegheată, unde libertatea individuală este suprimată de un regim totalitar.",
+      "themes": ["libertate", "control social", "totalitarism"]
+    },
+    {
+      "title": "Micul Prinț",
+      "summary": "O poveste poetică despre prietenie, inocență și sensul vieții, văzută prin ochii unui copil venit de pe o altă planetă.",
+      "themes": ["prietenie", "magie", "copilărie"]
+    },
+    {
+      "title": "Toate pânzele sus!",
+      "summary": "Aventurile unei echipaje românești pe mare, în căutarea unui prieten dispărut, pline de curaj și solidaritate.",
+      "themes": ["aventură", "prietenie", "curaj"]
+    },
+    {
+      "title": "Harry Potter și Piatra Filozofală",
+      "summary": "Primul volum din seria Harry Potter, unde magia, prietenia și descoperirea de sine sunt în centrul acțiunii.",
+      "themes": ["magie", "prietenie", "descoperire de sine"]
+    },
+    {
+      "title": "Moromeții",
+      "summary": "Viața unei familii de țărani români, cu provocările sociale și personale din perioada interbelică.",
+      "themes": ["familie", "rural", "schimbare socială"]
+    },
+    {
+      "title": "Amintiri din copilărie",
+      "summary": "Povestiri pline de umor și nostalgie despre copilăria autorului în satul Humulești.",
+      "themes": ["copilărie", "umor", "tradiție"]
+    },
+    {
+      "title": "Enigma Otiliei",
+      "summary": "Roman despre maturizare, dragoste și mister, pe fundalul Bucureștiului de început de secol XX.",
+      "themes": ["dragoste", "mister", "maturizare"]
+    },
+    {
+      "title": "Jurnalul Annei Frank",
+      "summary": "Mărturia emoționantă a unei adolescente evreice ascunse în timpul Holocaustului.",
+      "themes": ["război", "supraviețuire", "speranță"]
+    },
+    {
+      "title": "Pădurea spânzuraților",
+      "summary": "Roman despre război, conștiință și dileme morale, inspirat de experiențele autorului pe front.",
+      "themes": ["război", "conștiință", "dileme morale"]
+    },
+    {
+      "title": "Fahrenheit 451",
+      "summary": "O lume în care cărțile sunt interzise, iar gândirea liberă este pedepsită, explorând tema cenzurii.",
+      "themes": ["cenzură", "libertate", "tehnologie"]
+    },
+    {
+      "title": "Crimă și pedeapsă",
+      "summary": "Roman psihologic despre vinovăție, moralitate și căutarea sensului existenței.",
+      "themes": ["vinovăție", "moralitate", "existență"]
+    }
+  ]
+}
