@@ -7,14 +7,50 @@
 </head>
 <body>
     <h1>Smart Librarian – AI Book Recommender</h1>
-    <input type="text" id="query" placeholder="Enter theme or context">
-    <button onclick="getRecommendation()">Get Recommendation</button>
+    <div style="display: flex; align-items: center; justify-content: center;">
+        <button id="voiceBtn" style="margin-right:8px;">🎤 Speak</button>
+        <input type="text" id="query" placeholder="Enter theme or context">
+    </div>
+    <div style="display: flex; justify-content: center;">
+        <button onclick="getRecommendation()" style="margin-top:10px;">Get Recommendation</button>
+    </div>
     <div id="result"></div>
     <div id="summary"></div>
     <button onclick="playTTS()">Listen to Recommendation</button>
     <audio id="audio" controls style="display:none;"></audio>
 
     <script>
+    // Speech to text
+    const voiceBtn = document.getElementById('voiceBtn');
+    const queryInput = document.getElementById('query');
+    let recognition;
+    if ('webkitSpeechRecognition' in window) {
+        recognition = new webkitSpeechRecognition();
+    } else if ('SpeechRecognition' in window) {
+        recognition = new SpeechRecognition();
+    }
+    if (recognition) {
+        recognition.lang = 'ro-RO'; // Change to 'en-US' for English
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            queryInput.value = transcript;
+        };
+        recognition.onerror = function(event) {
+            alert('Speech recognition error: ' + event.error);
+        };
+        voiceBtn.onclick = function() {
+            recognition.start();
+            voiceBtn.textContent = '🎤 Listening...';
+        };
+        recognition.onend = function() {
+            voiceBtn.textContent = '🎤 Speak';
+        };
+    } else {
+        voiceBtn.disabled = true;
+        voiceBtn.title = 'Speech recognition not supported in this browser.';
+    }
     async function getRecommendation() {
         const query = document.getElementById('query').value;
         const res = await fetch('/recommend', {
