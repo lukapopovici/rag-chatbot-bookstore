@@ -20,20 +20,18 @@ This project provides an AI chatbot that recommends books based on themes and co
 	```powershell
 	python backend/load_books_to_chromadb.py
 	```
-4. Run the chatbot in CLI (optional):
+4. Run the Flask backend server:
 	```powershell
-	python backend/chatbot.py
+	python backend/server.py
 	```
-5. Start the frontend (Streamlit web app):
-	```powershell
-	streamlit run frontend/app.py
-	```
-6. Interact with the AI librarian in your browser (usually at http://localhost:8501).
+5. Open `frontend/index.html` in your browser to use the web interface.
 
 ## Key Files
 - `backend/book_summaries.json` – Book summaries and key themes
 - `backend/chatbot.py` – RAG + GPT + tool pipeline
-- `frontend/app.py` – Web interface
+- `backend/server.py` – Flask backend server
+- `frontend/index.html` – JavaScript web interface
+- `frontend/style.css` – CSS for frontend
 
 ## Requirements
 - Python 3.8+

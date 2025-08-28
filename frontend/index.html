@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Librarian</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Smart Librarian – AI Book Recommender</h1>
+    <input type="text" id="query" placeholder="Enter theme or context">
+    <button onclick="getRecommendation()">Get Recommendation</button>
+    <div id="result"></div>
+    <div id="summary"></div>
+    <button onclick="playTTS()">Listen to Recommendation</button>
+    <audio id="audio" controls style="display:none;"></audio>
+
+    <script>
+    async function getRecommendation() {
+        const query = document.getElementById('query').value;
+        const res = await fetch('/recommend', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({query})
+        });
+        const data = await res.json();
+        let result = '';
+        if (data.length > 0) {
+            result = `<b>Recommendation:</b> ${data[0].title}<br>${data[0].text}`;
+            document.getElementById('result').innerHTML = result;
+            getSummary(data[0].title);
+        } else {
+            document.getElementById('result').innerHTML = 'No recommendation found.';
+        }
+    }
+    async function getSummary(title) {
+        const res = await fetch(`/summary?title=${encodeURIComponent(title)}`);
+        const data = await res.json();
+        document.getElementById('summary').innerHTML = `<b>Summary:</b> ${data.summary}`;
+    }
+    async function playTTS() {
+        const text = document.getElementById('result').innerText + '\n' + document.getElementById('summary').innerText;
+        const res = await fetch('/tts', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({text})
+        });
+        const data = await res.json();
+        const audio = document.getElementById('audio');
+        audio.src = data.audio_path;
+        audio.style.display = 'block';
+        audio.play();
+    }
+    </script>
+</body>
+</html>
