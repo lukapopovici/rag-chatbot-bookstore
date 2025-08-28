@@ -20,9 +20,6 @@ def read_api_key():
 
 # Tool: get_summary_by_title
 def get_summary_by_title(title: str) -> str:
-    """
-    Return the full summary for a given book title from book_summaries.json.
-    """
     summaries_path = os.path.join(os.path.dirname(__file__), "book_summaries.json")
     with open(summaries_path, "r", encoding="utf-8") as f:
         data = json.load(f)
@@ -32,8 +29,6 @@ def get_summary_by_title(title: str) -> str:
     return "Titlul nu a fost găsit."
 
 # Chatbot pipeline
-def contains_offensive_language(text):
-    # Simple list, can be extended
     offensive_words = [
         "badword1", "badword2", "idiot", "stupid", "hate", "urât", "prost", "jignire"
     ]

@@ -2,7 +2,6 @@
 # Add this function to backend/chatbot.py and use before sending prompt to LLM
 
 def contains_offensive_language(text):
-    # Simple list, can be extended
     offensive_words = [
         "badword1", "badword2", "idiot", "stupid", "hate", "urât", "prost", "jignire"
     ]

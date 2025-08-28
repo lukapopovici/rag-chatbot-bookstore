@@ -20,24 +20,17 @@ def read_api_key():
 
 def semantic_search(query, top_k=3):
     api_key = read_api_key()
-    """
-    Return top_k book recommendations based on semantic similarity to the query.
-    """
-    # Generate embedding for query
     openai_client = OpenAI(api_key=api_key)
     embedding = openai_client.embeddings.create(
         input=[query],
         model="text-embedding-3-small"
     ).data[0].embedding
-
-    # Search in ChromaDB
     chroma_client = Client()
     collection = chroma_client.get_collection(name="books")
     results = collection.query(
         query_embeddings=[embedding],
         n_results=top_k
     )
-    # Return list of dicts: title, summary, themes
     recommendations = []
     for doc, meta in zip(results['documents'][0], results['metadatas'][0]):
         recommendations.append({
