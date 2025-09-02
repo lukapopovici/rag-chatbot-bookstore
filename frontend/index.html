@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <button id="themeBtn" onclick="toggleTheme()">🌙 Dark Theme</button>
     <h1>Smart Librarian – AI Book Recommender</h1>
     <div style="display: flex; align-items: center; justify-content: center;">
         <button id="voiceBtn" style="margin-right:8px;">🎤 Speak</button>
@@ -20,8 +21,20 @@
     <audio id="audio" controls style="display:none;"></audio>
 
     <script>
-    // Use full URLs for backend endpoints
     const BACKEND_URL = 'http://localhost:5000';
+
+    // Theme toggle
+    function toggleTheme() {
+        document.body.classList.toggle('dark');
+        const themeBtn = document.getElementById('themeBtn');
+        if (document.body.classList.contains('dark')) {
+            themeBtn.textContent = 'Light Theme';
+            themeBtn.classList.add('dark');
+        } else {
+            themeBtn.textContent = 'Dark Theme';
+            themeBtn.classList.remove('dark');
+        }
+    }
 
     // Speech to text
     const voiceBtn = document.getElementById('voiceBtn');

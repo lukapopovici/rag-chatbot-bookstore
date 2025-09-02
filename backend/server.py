@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import os
 import sys
 from retriever import semantic_search
@@ -7,6 +8,7 @@ from gtts import gTTS
 import tempfile
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/recommend', methods=['POST'])
 def recommend():

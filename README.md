@@ -1,41 +1,56 @@
-# Smart Librarian – AI with RAG + Tool Completion
+# Smart Librarian – AI Book Recommender
 
-This project provides an AI chatbot that recommends books based on themes and context, using a database of summaries, semantic search (RAG), and GPT integration.
+## Project Structure
 
-## Structure
-- `backend/` – Code for processing, RAG, chatbot, and book summaries database
-- `frontend/` – Streamlit interface for user interaction
+- `backend/` – Python Flask API server
+  - `server.py` – main Flask server
+  - `retriever.py`, `chatbot.py` – core logic
+  - `book_summaries.json` – book data
+- `frontend/` – HTML + JS frontend
+  - `index.html` – main web interface
+  - `style.css` – styles
 
+## Setup & Run
 
-## How to Run (Step-by-Step)
-1. Create and activate the virtual environment, then install dependencies:
-	- Run `setup.ps1` in PowerShell, or manually:
-	  ```powershell
-	  python -m venv venv
-	  .\venv\Scripts\Activate.ps1
-	  pip install -r requirements.txt
-	  ```
-2. Add your OpenAI API key to a file named `OPENAI_API_KEY` in the `backend` folder.
-3. Populate the vector database:
-	```powershell
-	python backend/load_books_to_chromadb.py
-	```
-4. Run the Flask backend server:
-	```powershell
-	python backend/server.py
-	```
-5. Open `frontend/index.html` in your browser to use the web interface.
+1. **Create and activate virtual environment:**
+   ```powershell
+   python -m venv venv
+   .\venv\Scripts\Activate.ps1
+   ```
 
-## Key Files
-- `backend/book_summaries.json` – Book summaries and key themes
-- `backend/chatbot.py` – RAG + GPT + tool pipeline
-- `backend/server.py` – Flask backend server
-- `frontend/index.html` – JavaScript web interface
-- `frontend/style.css` – CSS for frontend
+2. **Install dependencies:**
+   ```powershell
+   pip install -r requirements.txt
+   ```
+
+3. **Add your OpenAI API key:**
+   - Place your key in a file named `OPENAI_API_KEY` in the project root.
+
+4. **Run the Flask backend:**
+   ```powershell
+   python backend/server.py
+   ```
+   - The API will be available at `http://localhost:5000`
+
+5. **Serve the frontend:**
+   ```powershell
+   cd frontend
+   python -m http.server 8080
+   ```
+   - Open [http://localhost:8080](http://localhost:8080) in your browser.
+
+## Usage
+
+- Enter a theme/context or use the microphone button to speak your query.
+- Click "Get Recommendation" to receive a book suggestion.
+- View the summary and optionally listen to the recommendation via TTS.
+
+## Endpoints
+
+- `POST /recommend` – Get book recommendations
+- `GET /summary?title=...` – Get full summary for a book
+- `POST /tts` – Get TTS audio for recommendation/summary
 
 ## Requirements
-- Python 3.8+
-- OpenAI API key
 
-## Author
-lukapopovici
+See `requirements.txt` for all dependencies.
