@@ -20,6 +20,9 @@
     <audio id="audio" controls style="display:none;"></audio>
 
     <script>
+    // Use full URLs for backend endpoints
+    const BACKEND_URL = 'http://localhost:5000';
+
     // Speech to text
     const voiceBtn = document.getElementById('voiceBtn');
     const queryInput = document.getElementById('query');
@@ -53,7 +56,7 @@
     }
     async function getRecommendation() {
         const query = document.getElementById('query').value;
-        const res = await fetch('/recommend', {
+        const res = await fetch(`${BACKEND_URL}/recommend`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({query})
@@ -69,13 +72,13 @@
         }
     }
     async function getSummary(title) {
-        const res = await fetch(`/summary?title=${encodeURIComponent(title)}`);
+        const res = await fetch(`${BACKEND_URL}/summary?title=${encodeURIComponent(title)}`);
         const data = await res.json();
         document.getElementById('summary').innerHTML = `<b>Summary:</b> ${data.summary}`;
     }
     async function playTTS() {
         const text = document.getElementById('result').innerText + '\n' + document.getElementById('summary').innerText;
-        const res = await fetch('/tts', {
+        const res = await fetch(`${BACKEND_URL}/tts`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({text})
